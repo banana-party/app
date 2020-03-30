@@ -1,0 +1,28 @@
+version: '3'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx.Dockerfile
+    restart: always
+    stop_grace_period: 30s
+    ports:
+      - '127.0.0.1:9000:80'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    depends_on:
+      - app
+  app:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+    restart: always
+    stop_grace_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
